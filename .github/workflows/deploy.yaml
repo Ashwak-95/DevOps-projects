@@ -22,3 +22,7 @@ jobs:
       run: |
         docker build -t ${{ secrets.DOCKER_USERNAME }}/k3s-app:latest .
         docker push ${{ secrets.DOCKER_USERNAME }}/k3s-app:latest
+
+    - name: Deploy to k3s
+      run: |
+        kubectl apply -f /home/ashwak/k8s
