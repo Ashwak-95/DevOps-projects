@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: k3s-app
+  name: k3s-app
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: k3s-app
+
+  strategy:
+    type: RollingUpdate
+
+  template:
+    metadata:
+      labels:
+        app: k3s-app
+
+    spec:
+      containers:
+      - name: k3s-app
+        image: nginx:alpine    # pipeline will replace with commit-specific image
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 5000
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "250m"
+            memory: "256Mi"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          failureThreshold: 2
