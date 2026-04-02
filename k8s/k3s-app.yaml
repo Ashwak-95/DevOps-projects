@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: k3s-app
-        image: nginx:alpine    # pipeline will replace with commit-specific image
+        image: ashwak95/k3s-app
         imagePullPolicy: Always
         ports:
           - containerPort: 5000
