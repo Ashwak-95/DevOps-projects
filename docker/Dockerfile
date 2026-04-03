@@ -1,9 +1,5 @@
 FROM python:3.11-slim
 
-# Avoid .pyc files and enabling clean logging
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
 WORKDIR /app
 
 # Install dependencies (cached layer)
