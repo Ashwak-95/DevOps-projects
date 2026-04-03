@@ -1,0 +1,7 @@
+.git
+.github
+k8s
+docker
+README.md
+__pycache__
+*.pyc

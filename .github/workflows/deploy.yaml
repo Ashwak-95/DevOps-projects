@@ -1,4 +1,4 @@
-name: CI/CD pipeline to build and deploy apps
+name: CI/CD pipeline to build and deploy app
 
 on:
   push:
@@ -20,23 +20,28 @@ jobs:
     
     - name: Build and Push Image
       run: |
+        set -e
         IMAGE=${{ secrets.DOCKER_USERNAME }}/k3s-app:${{ github.sha }}
         
         echo "Deploying image: $IMAGE"
 
-        docker build -t $IMAGE .
+        docker build -t $IMAGE -f docker/Dockerfile .
         docker push $IMAGE
 
     - name: Deploy to k3s
       run: |
+        set -e
+
         IMAGE=${{ secrets.DOCKER_USERNAME }}/k3s-app:${{ github.sha }}
 
-        kubectl apply -f k8s/
-
+        # Deploy new image
         kubectl set image deployment/k3s-app k3s-app=$IMAGE
 
+        # Add rollout message
         kubectl annotate deployment/k3s-app \
-          kubernetes.io/change-cause="${{ github.event.head_commit.message }}" \
+          kubernetes.io/change-cause="${{ github.sha }} - ${{ github.event.head_commit.message }}" \
           --overwrite
 
-        kubectl rollout status deployment/k3s-app --timeout=60s
+        # Wait for rollout, rollback if failed
+        kubectl rollout status deployment/k3s-app --timeout=60s || \
+        (echo "Rollout failed. Rolling back..." && kubectl rollout undo deployment/k3s-app && exit 1)
