@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: k3s-app
-        image: ashwak95/k3s-app:latest
+        image: ashwak95/k3s-app:placeholder
         imagePullPolicy: Always
         ports:
           - containerPort: 5000
