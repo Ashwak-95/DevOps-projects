@@ -13,10 +13,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY app/ .
 
-# Create non-root user (security)
-RUN useradd -m appuser
-USER appuser
-
 EXPOSE 5000
 
 CMD ["python3", "app.py"]
