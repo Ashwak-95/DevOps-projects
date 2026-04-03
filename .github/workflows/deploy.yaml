@@ -43,5 +43,5 @@ jobs:
           --overwrite
 
         # Wait for rollout, rollback if failed
-        kubectl rollout status deployment/k3s-app --timeout=60s || \
+        kubectl rollout status deployment/k3s-app --timeout=180s || \
         (echo "Rollout failed. Rolling back..." && kubectl rollout undo deployment/k3s-app && exit 1)

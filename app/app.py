@@ -12,13 +12,13 @@ def home():
 
 @app.route("/live")
 def live():
-    return "OK", 200
+    return "Yes, Live", 200
 
 
 @app.route("/ready")
 def ready():
     if healthy:
-        return "OK", 200
+        return "Yes, Ready", 200
     return "FAIL", 500
 
 
