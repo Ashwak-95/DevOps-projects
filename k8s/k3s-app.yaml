@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: k3s-app
-        image: ashwak95/k3s-app:latest
+        image: userName/k3s-app:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 5000
@@ -38,12 +38,12 @@ spec:
           httpGet:
             path: /health
             port: 5000
-          initialDelaySeconds: 3
-          periodSeconds: 5
+          initialDelaySeconds: 5
+          periodSeconds: 10
         livenessProbe:
           httpGet:
             path: /health
             port: 5000
-          initialDelaySeconds: 5
-          periodSeconds: 10
+          initialDelaySeconds: 15
+          periodSeconds: 20
           failureThreshold: 2

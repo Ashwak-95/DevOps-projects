@@ -6,6 +6,8 @@ app = Flask(__name__)
 def home():
     return "Hello from Kubernetes(K8s)!"
 
+healthy = True
+
 @app.route("/health")
 def health():
     if healthy:
