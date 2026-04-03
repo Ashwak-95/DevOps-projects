@@ -31,5 +31,9 @@ jobs:
       run: |
         IMAGE=${{ secrets.DOCKER_USERNAME }}/k3s-app:${{ github.sha }}
 
+        # Apply Deployment & Service
+        kubectl apply -f k8s/
+
+        # Update image dynamically (optional, if using set image)
         kubectl set image deployment/k3s-app k3s-app=$IMAGE
         kubectl rollout status deployment/k3s-app --timeout=60s
