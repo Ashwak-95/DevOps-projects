@@ -36,7 +36,7 @@ jobs:
 
         echo "Deploying image: $IMAGE"
 
-        sed -i "s|image: .*|image: $IMAGE|" k8s/deployment.yaml
+        sed -i "s|image: .*|image: $IMAGE|" k8s/k3s-app.yaml
 
         kubectl apply -f k8s/
 
