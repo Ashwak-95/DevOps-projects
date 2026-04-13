@@ -40,5 +40,13 @@ jobs:
 
         kubectl apply -f k8s/
 
-        kubectl rollout status deployment/k3s-app --timeout=180s || \   
-        (echo "Rollout failed. Rolling back..." && kubectl rollout undo deployment/k3s-app && exit 1)
+        # Wait for rollout
+        kubectl rollout status deployment/k3s-app --timeout=180s || {
+          echo "Rollout failed"
+
+          # Try rollback (if not possible)
+          kubectl rollout undo deployment/k3s-app || true
+
+          exit 1
+        }
+
