@@ -34,14 +34,11 @@ jobs:
 
         IMAGE=${{ secrets.DOCKER_USERNAME }}/k3s-app:${{ github.sha }}
 
-        # Deploy new image
-        kubectl set image deployment/k3s-app k3s-app=$IMAGE
+        echo "Deploying image: $IMAGE"
 
-        # Add rollout message
-        kubectl annotate deployment/k3s-app \
-          kubernetes.io/change-cause="${{ github.sha }} - ${{ github.event.head_commit.message }}" \
-          --overwrite
+        sed -i "s|image: .*|image: $IMAGE|" k8s/deployment.yaml
 
-        # Wait for rollout, rollback if failed
-        kubectl rollout status deployment/k3s-app --timeout=180s || \
+        kubectl apply -f k8s/
+
+        kubectl rollout status deployment/k3s-app --timeout=180s || \   
         (echo "Rollout failed. Rolling back..." && kubectl rollout undo deployment/k3s-app && exit 1)
