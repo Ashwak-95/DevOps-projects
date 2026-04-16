@@ -13,14 +13,14 @@ def home():
 @app.route("/live")
 def live():
     if healthy:
-        return "Yes, Live", 200
-    return "FAIL", 500
+        return "Yes, Live\n", 200
+    return "FAIL\n", 500
 
 
 @app.route("/ready")
 def ready():
     if healthy:
-        return "Yes, Ready", 200
+        return "Yes, Ready\n", 200
     return "FAIL", 500
 
 
@@ -29,7 +29,7 @@ def ready():
 def break_app():
     global healthy
     healthy = False
-    return "App is broken"
+    return "App is broken\n"
 
 
 # Recover the app
@@ -37,7 +37,7 @@ def break_app():
 def fix_app():
     global healthy
     healthy = True
-    return "App is READY again"
+    return "App is READY again\n"
 
 
 if __name__ == "__main__":
