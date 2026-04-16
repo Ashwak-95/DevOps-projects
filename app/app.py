@@ -7,7 +7,9 @@ healthy = True
 
 @app.route("/")
 def home():
-    return "Hello from Kubernetes(K8s)!\n"
+    if healthy:
+        return "Hello from Kubernetes(K8s)!\n"
+    return "Service Unavailable\n", 500
 
 
 @app.route("/live")
