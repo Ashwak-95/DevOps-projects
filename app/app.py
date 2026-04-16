@@ -29,7 +29,7 @@ def ready():
 def break_app():
     global healthy
     healthy = False
-    return "App is now broken"
+    return "App is broken"
 
 
 # Recover the app
