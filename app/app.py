@@ -7,7 +7,7 @@ healthy = True
 
 @app.route("/")
 def home():
-    return "Hello from Kubernetes(K8s)!"
+    return "Hello from Kubernetes(K8s)!\n"
 
 
 @app.route("/live")
